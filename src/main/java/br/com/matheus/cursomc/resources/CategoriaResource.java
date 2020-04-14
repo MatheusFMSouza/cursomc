@@ -1,6 +1,10 @@
 package br.com.matheus.cursomc.resources;
 
 import br.com.matheus.cursomc.domain.Categoria;
+import br.com.matheus.cursomc.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,17 +17,14 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar() {
-        Categoria c = new Categoria(1, "Informática");
-        Categoria c2 = new Categoria(2, "Escritorio");
+    @Autowired
+    private CategoriaService service;
 
-        List<Categoria> list = new ArrayList<>();
 
-        list.add(c);
-        list.add(c2);
-
-        return list;
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findy(@PathVariable Integer id) {
+        Categoria obj = service.buscar(id);
+        return ResponseEntity.ok().body(obj);
     }
 
 }
