@@ -1,41 +1,29 @@
 package br.com.matheus.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Cidade implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    public Categoria() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nome;
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private Estado estado;
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public Cidade() {
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    public Categoria(Integer id, String nome) {
+    public Cidade(Integer id, String nome, Estado estado) {
         this.id = id;
         this.nome = nome;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -54,12 +42,20 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Categoria)) return false;
-        Categoria categoria = (Categoria) o;
-        return getId().equals(categoria.getId());
+        if (!(o instanceof Cidade)) return false;
+        Cidade cidade = (Cidade) o;
+        return getId().equals(cidade.getId());
     }
 
     @Override
