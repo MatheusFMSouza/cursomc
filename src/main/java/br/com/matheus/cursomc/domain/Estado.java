@@ -1,5 +1,8 @@
 package br.com.matheus.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ public class Estado implements Serializable {
     private Integer id;
     private String nome;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 
