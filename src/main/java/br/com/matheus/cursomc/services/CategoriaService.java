@@ -2,8 +2,10 @@ package br.com.matheus.cursomc.services;
 
 import br.com.matheus.cursomc.domain.Categoria;
 import br.com.matheus.cursomc.repositories.CategoriaRepository;
+import br.com.matheus.cursomc.services.exceptions.DataIntegrityException;
 import br.com.matheus.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -31,5 +33,13 @@ public class CategoriaService {
         return repo.save(obj);
     }
 
+    public void delete(Integer id) {
+        find(id);
+        try {
+            repo.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possivel excluir uma categoria que contem produtos");
+        }
+    }
 
 }
