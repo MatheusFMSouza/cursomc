@@ -1,6 +1,7 @@
 package br.com.matheus.cursomc.services;
 
 import br.com.matheus.cursomc.domain.Categoria;
+import br.com.matheus.cursomc.dto.CategoriaDTO;
 import br.com.matheus.cursomc.repositories.CategoriaRepository;
 import br.com.matheus.cursomc.services.exceptions.DataIntegrityException;
 import br.com.matheus.cursomc.services.exceptions.ObjectNotFoundException;
@@ -54,6 +55,10 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPages, Sort.Direction.valueOf(direction), orderBy);
 
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDTO){
+        return new Categoria(objDTO.getId(),objDTO.getNome());
     }
 
 
