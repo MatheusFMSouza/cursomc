@@ -1,6 +1,8 @@
 package br.com.matheus.cursomc.config;
 
 import br.com.matheus.cursomc.services.DBService;
+import br.com.matheus.cursomc.services.EmailService;
+import br.com.matheus.cursomc.services.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,12 +23,16 @@ public class DevConfig {
 
     @Bean
     public boolean instantiateDatabase() throws ParseException {
-        if(!"create".equals(strategy)){
-           return false;
+        if (!"create".equals(strategy)) {
+            return false;
         }
         dbService.instatiateTestDatabase();
         return true;
     }
 
+    @Bean
+    public EmailService emailService() {
+        return new MockEmailService();
+    }
 
 }
