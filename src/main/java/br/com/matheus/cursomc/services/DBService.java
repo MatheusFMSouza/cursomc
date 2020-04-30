@@ -2,6 +2,7 @@ package br.com.matheus.cursomc.services;
 
 import br.com.matheus.cursomc.domain.*;
 import br.com.matheus.cursomc.domain.enums.EstadoPagamento;
+import br.com.matheus.cursomc.domain.enums.Perfil;
 import br.com.matheus.cursomc.domain.enums.TipoCliente;
 import br.com.matheus.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,16 +102,26 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Matheus Fideles", "matheuss.fideles@hotmail.com", "99999999", TipoCliente.PESSOAFISICA,pe.encode("123"));
-
+        Cliente cli1 = new Cliente(null, "Matheus Fideles", "matheusfideles.souza@gmail.com", "47605396899", TipoCliente.PESSOAFISICA,pe.encode("123"));
         cli1.getTelefones().addAll(Arrays.asList("11 9999999", "11 00000000"));
+
+        Cliente cli2 = new Cliente(null, "Matheus Fideles Martins de Souza",
+                "matheuss.fideles@hotmail.com",
+                "47605396899",
+                TipoCliente.PESSOAFISICA,pe.encode("123"));
+        cli2.addPerfil(Perfil.ADMIN);
+        cli2.getTelefones().addAll(Arrays.asList("11 9999999", "11 00000000"));
+
 
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "8888888", cli1, c1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "8344444", cli1, c2);
+        Endereco e3 = new Endereco(null, "Rua Laudelino dos santos",
+                "105", "Sala 800", "Centro", "8344444", cli2, c2);
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+        cli1.getEnderecos().addAll(Arrays.asList(e3));
 
-        clienteRepository.saveAll(Arrays.asList(cli1));
-        enderecoRepository.saveAll(Arrays.asList(e1, e2));
+        clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+        enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
