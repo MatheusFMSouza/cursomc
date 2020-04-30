@@ -3,6 +3,7 @@ package br.com.matheus.cursomc.config;
 import br.com.matheus.cursomc.services.DBService;
 import br.com.matheus.cursomc.services.EmailService;
 import br.com.matheus.cursomc.services.MockEmailService;
+import br.com.matheus.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +31,13 @@ public class DevConfig {
         return true;
     }
 
+
+
     @Bean
-    public EmailService emailService() {
-        return new MockEmailService();
+    public EmailService emailServiceSmtp() {
+        return new SmtpEmailService();
     }
+
+
 
 }

@@ -1,6 +1,8 @@
 package br.com.matheus.cursomc.config;
 
 import br.com.matheus.cursomc.services.DBService;
+import br.com.matheus.cursomc.services.EmailService;
+import br.com.matheus.cursomc.services.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +23,9 @@ public class TestConfig {
         return true;
     }
 
+    @Bean
+    public EmailService emailService() {
+        return new MockEmailService();
+    }
 
 }
