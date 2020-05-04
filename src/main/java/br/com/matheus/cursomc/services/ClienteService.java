@@ -9,7 +9,6 @@ import br.com.matheus.cursomc.dto.ClienteDTO;
 import br.com.matheus.cursomc.dto.ClienteNewDTO;
 import br.com.matheus.cursomc.repositories.ClienteRepository;
 import br.com.matheus.cursomc.repositories.EnderecoRepository;
-import br.com.matheus.cursomc.security.ImageService;
 import br.com.matheus.cursomc.security.UserSS;
 import br.com.matheus.cursomc.services.exceptions.AuthorizationException;
 import br.com.matheus.cursomc.services.exceptions.DataIntegrityException;
@@ -50,6 +49,9 @@ public class ClienteService {
 
     @Value("${img.prefix.client.profile}")
     private String prefix;
+
+    @Value("${img.profile.size}")
+    private Integer size;
 
     public Cliente find(Integer id) {
 
@@ -150,6 +152,10 @@ public class ClienteService {
         }
 
         BufferedImage jpgImage = imageService.getJpgImagemFromFile(multipartFile);
+
+        jpgImage = imageService.cropSquare(jpgImage);
+        jpgImage = imageService.resize(jpgImage, size);
+
         String fileName = prefix + user.getId() + ".jpg";
         return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
